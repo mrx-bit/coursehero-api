@@ -2,12 +2,16 @@ package kz.iitu.hackday.coursehero.service.impl;
 
 import kz.iitu.hackday.coursehero.entity.Session;
 import kz.iitu.hackday.coursehero.entity.SessionState;
+import kz.iitu.hackday.coursehero.entity.User;
 import kz.iitu.hackday.coursehero.entity.enums.SessionStates;
 import kz.iitu.hackday.coursehero.repository.SessionRepository;
 import kz.iitu.hackday.coursehero.repository.SessionStateRepository;
+import kz.iitu.hackday.coursehero.repository.UserRepository;
 import kz.iitu.hackday.coursehero.service.SessionService;
+import kz.iitu.hackday.coursehero.utils.constants.ErrorMessageConstants;
 import kz.iitu.hackday.coursehero.utils.constants.ErrorMessageConstants.*;
 import kz.iitu.hackday.coursehero.utils.exceptions.NoContentFoundException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +22,12 @@ import java.util.Optional;
 @Service
 @Transactional
 @Slf4j
+@AllArgsConstructor
 public class SessionServiceImpl implements SessionService {
 
     private SessionStateRepository sessionStateRepository;
     private SessionRepository sessionRepository;
-
-    public SessionServiceImpl(SessionStateRepository sessionStateRepository, SessionRepository sessionRepository) {
-        this.sessionStateRepository = sessionStateRepository;
-        this.sessionRepository = sessionRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public Session create(String email, String token, String context) {
@@ -37,8 +38,13 @@ public class SessionServiceImpl implements SessionService {
                 sessionStateRepository.findByName(SessionStates.opened).getId(),
                 new Date());
 
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new NoContentFoundException(ErrorMessageConstants.DataNotFound.MESSAGE,
+                        ErrorMessageConstants.DataNotFound.ERROR_CODE));
+
         Date created = new Date();
         Session session = new Session();
+        session.setUserId(user.getId());
         session.setEmail(email);
         session.setToken(token);
         session.setCreated(created);
