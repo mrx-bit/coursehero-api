@@ -369,8 +369,6 @@ create table session
 	session_token varchar(255) not null,
 	updated datetime(6) null,
 	user_id bigint not null,
-	constraint UK_g5buif0j7oavm63jck6bg9p0i
-	unique (email),
 	constraint UK_d16yqd2ghhaxopy9mvwqsnu08
 	unique (session_token)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
