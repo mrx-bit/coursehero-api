@@ -20,7 +20,6 @@ public class Session {
     @Column(name = "user_id")
     @NotNull
     private Long userId;
-    @Column(unique = true)
     @NotNull
     private String email;
     @Column(name = "session_token", unique = true)
