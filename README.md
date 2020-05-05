@@ -8,6 +8,9 @@
 ## Demo
 <a target="_blank" href="https://yadi.sk/i/HMhcbIvrRopJ0A">Ссылка на видео-демо на yandex disk</a>
 
+## Swagger API DOCUMENTATION
+http://185.125.46.42:9292/api/swagger-ui.html
+
 ## Build
 `mvn clean install`
 Database scripts are migrated automatically using Flyway DB migrations.
