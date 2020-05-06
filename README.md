@@ -11,6 +11,9 @@
 ## Swagger API DOCUMENTATION
 http://185.125.46.42:9292/api/swagger-ui.html
 
+## DB Architecture (ER Diagram)
+https://yadi.sk/i/B4b6BcpwsD0f1A
+
 ## Build
 `mvn clean install`
 Database scripts are migrated automatically using Flyway DB migrations.
